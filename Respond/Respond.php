@@ -90,7 +90,7 @@ class Respond implements Arrayable
         {
             $result = $closure();
 
-            if( ! is_null($resultKey))
+            if(is_not_null($resultKey))
             {
                 if( ! empty($resultKey))
                     $result = [$resultKey => $result];
