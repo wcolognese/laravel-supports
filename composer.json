@@ -11,11 +11,16 @@
         }
     ],
     "require": {
-        "php": "^7.4"
+        "php": "^7.4",
+        "illuminate/contracts": "^7",
+        "illuminate/http": "^7"
     },
     "autoload": {
         "files": [
             "helpers.php"
-        ]
+        ],
+        "psr-4": {
+            "WColognese\\LaravelSupports\\": ""
+        }
     }
 }
