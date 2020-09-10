@@ -1,0 +1,16 @@
+{
+    "name": "wcolognese/laravel-supports",
+    "description": "Funcionalidades de auxilio para estrutura de serviços e outras coisas...",
+    "type": "library",
+    "license": "MIT",
+    "homepage": "https://github.com/wcolognese/laravel-supports",
+    "authors": [
+        {
+            "name": "Wagner Colognese",
+            "email": "wagner.f.colognese@gmail.com.br"
+        }
+    ],
+    "require": {
+        "php": "^7.4"
+    }
+}
