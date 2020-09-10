@@ -12,5 +12,10 @@
     ],
     "require": {
         "php": "^7.4"
+    },
+    "autoload": {
+        "files": [
+            "helpers.php"
+        ]
     }
 }
