@@ -65,12 +65,12 @@ abstract class Basic
         return $this->getEntityInstance()->where($column, $value)->get();
     }
 
-    protected function all(): Collection
+    protected function __all(): Collection
     {
         return $this->getEntityInstance()->all();
     }
 
-    protected function delete($key): bool
+    protected function __delete($key): bool
     {
         if($model = $this->byKey($key))
             return $model->delete();
