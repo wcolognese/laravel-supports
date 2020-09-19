@@ -72,7 +72,7 @@ abstract class Basic
 
     protected function __delete($key): bool
     {
-        if($model = $this->byKey($key))
+        if($model = $this->__byKey($key))
             return $model->delete();
 
         return FALSE;
