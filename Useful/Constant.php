@@ -38,6 +38,13 @@ abstract class Constant
         return isset(self::getConstants()[$key]);
     }
 
+    public static function byKey(string $key)
+    {
+        $constants = self::getConstants();
+
+        return $constants[$key] ?? null;
+    }
+
     public static function toSelectOptions(): array
     {
         $options = array();
