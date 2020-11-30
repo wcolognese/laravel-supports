@@ -88,7 +88,7 @@ class Respond implements Arrayable
     {
         if($closure)
         {
-            $result = $closure();
+            $result = $closure($this);
 
             if(is_not_null($resultKey))
             {
@@ -97,7 +97,8 @@ class Respond implements Arrayable
 
                 $this->setData($result);
 
-                $this->setSuccess();
+                if(is_null($this->message))
+                    $this->setMessage($this->status ? $this->messageSuccessDefault : $this->messageErrorDefault);
             }
         }
 
