@@ -3,7 +3,11 @@
 namespace WColognese\LaravelSupports\ServiceRequisitionValidate;
 
 use ReflectionClass;
+use ReflectionMethod;
+use InvalidArgumentException;
+use Illuminate\Validation\ValidationException;
 use WColognese\LaravelSupports\ServiceRequisitionValidate\Contracts\IRequisition;
+use Closure;
 
 class ServiceRequisitionValidate
 {
@@ -15,7 +19,7 @@ class ServiceRequisitionValidate
     public static function of($service): self
     {
         if(is_null($service))
-            throw new \InvalidArgumentException('$service cannot be null');
+            throw new InvalidArgumentException('$service cannot be null');
 
         $instance = new static();
 
@@ -40,11 +44,13 @@ class ServiceRequisitionValidate
     {
         if(method_exists($this->service, $method))
         {
-            return call_user_func_array(array($this->service, $method), $this->parseArgumentsToMethod($this->reflector->getMethod($method), $arguments));
+            $args = $this->handleArgs($this->reflector->getMethod($method), $arguments);
+
+            return call_user_func_array(array($this->service, $method), $args);
         }
     }
 
-    protected function parseArgumentsToMethod(\ReflectionMethod $method, $arguments): array
+    protected function handleArgs(ReflectionMethod $method, $arguments): array
     {
         foreach ($method->getParameters() as $param)
         {
@@ -70,6 +76,9 @@ class ServiceRequisitionValidate
                     $arguments[$param->getPosition()] = $requisition;
 
                     $this->onFailsThrowValidationException($requisition);
+
+                    if(method_exists($requisition, 'afterValidate'))
+                        $requisition->afterValidate();
                 }
             }
         }
@@ -81,7 +90,7 @@ class ServiceRequisitionValidate
     {
         if($requisition->getValidator()->fails())
         {
-            throw new \Illuminate\Validation\ValidationException($requisition->getValidator());
+            throw new ValidationException($requisition->getValidator());
         }
     }
 }
