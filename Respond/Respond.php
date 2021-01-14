@@ -84,6 +84,11 @@ class Respond implements Arrayable
         return $this->setMessage($e->getMessage())->setError($errors, $statusCode);
     }
 
+    protected function getMessage(): string
+    {
+        return $this->message ?? $this->status ? $this->messageSuccessDefault : $this->messageErrorDefault;
+    }
+
     public function do(Closure $closure = null, ?string $resultKey = ''): JsonResponse
     {
         if($closure)
@@ -96,9 +101,6 @@ class Respond implements Arrayable
                     $result = [$resultKey => $result];
 
                 $this->setData($result);
-
-                if(is_null($this->message))
-                    $this->setMessage($this->status ? $this->messageSuccessDefault : $this->messageErrorDefault);
             }
         }
 
@@ -114,7 +116,7 @@ class Respond implements Arrayable
     {
         return [
             'status'        => $this->status,
-            'message'       => $this->message,
+            'message'       => $this->getMessage(),
             'data'          => $this->data,
             'errors'        => $this->errors
         ];
