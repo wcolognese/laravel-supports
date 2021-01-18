@@ -86,7 +86,7 @@ class Respond implements Arrayable
 
     protected function getMessage(): string
     {
-        return $this->message ?? $this->status ? $this->messageSuccessDefault : $this->messageErrorDefault;
+        return $this->message ?? ($this->status ? $this->messageSuccessDefault : $this->messageErrorDefault);
     }
 
     public function do(Closure $closure = null, ?string $resultKey = ''): JsonResponse
