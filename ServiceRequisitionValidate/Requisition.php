@@ -62,7 +62,12 @@ abstract class Requisition implements IRequisition, ArrayAccess
 
     protected function makeValidator(): Validator
     {
-        return \Illuminate\Support\Facades\Validator::make($this->getData(), $this->rules());
+        return \Illuminate\Support\Facades\Validator::make(
+            $this->getData(),
+            $this->rules(),
+            method_exists($this, 'validatorMessages') ? $this->validatorMessages() : [],
+            method_exists($this, 'validatorCustomAttributes') ? $this->validatorCustomAttributes() : []
+        );
     }
 
     public static function make(array $data): self
