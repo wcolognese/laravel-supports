@@ -6,9 +6,12 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pipeline\Pipeline;
 use Illuminate\Support\Collection;
+use WColognese\LaravelSupports\Useful\PipeApplicables;
 
 abstract class Basic
 {
+    use PipeApplicables;
+
     protected $saveForceCreateIfHasKeyValue = false;
 
     protected abstract function getEntityInstance(): Model;
@@ -80,9 +83,9 @@ abstract class Basic
 
     protected function qbApplyFilters(array $filters, Builder $builder = null): Builder
     {
-        return app(Pipeline::class)
-                    ->send($builder ?? $this->getEntityInstance()->query())
-                        ->through($filters)
-                            ->thenReturn();
+        return $this->pipeApplicables(
+                        $filters,
+                $builder ?? $this->getEntityInstance()->query()
+            );
     }
 }
