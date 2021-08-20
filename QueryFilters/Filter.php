@@ -3,14 +3,19 @@
 namespace WColognese\LaravelSupports\QueryFilters;
 
 use Closure;
-use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
+use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Support\Str;
 
 abstract class Filter
 {
     protected $ignoreEmpty  = TRUE;
 
-    protected abstract function apply(Builder $builder): Builder;
+    /**
+     * @param EloquentBuilder|QueryBuilder $builder
+     * @return EloquentBuilder|QueryBuilder
+     */
+    protected abstract function apply($builder);
 
     public function handle($request, Closure $next)
     {

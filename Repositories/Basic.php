@@ -2,7 +2,8 @@
 
 namespace WColognese\LaravelSupports\Repositories;
 
-use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
+use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pipeline\Pipeline;
 use Illuminate\Support\Collection;
@@ -81,7 +82,13 @@ abstract class Basic
         return FALSE;
     }
 
-    protected function qbApplyFilters(array $filters, Builder $builder = null): Builder
+
+    /**
+     * @param array $filters
+     * @param QueryBuilder|EloquentBuilder|null $builder
+     * @return mixed
+     */
+    protected function qbApplyFilters(array $filters, $builder = null)
     {
         return $this->pipeApplicables(
                         $filters,

@@ -2,12 +2,17 @@
 
 namespace WColognese\LaravelSupports\QueryFilters\Operator;
 
-use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
+use Illuminate\Database\Query\Builder as QueryBuilder;
 use WColognese\LaravelSupports\QueryFilters\Filter;
 
 class Equal extends Filter
 {
-    protected function apply(Builder $builder): Builder
+    /**
+     * @param EloquentBuilder|QueryBuilder $builder
+     * @return EloquentBuilder|QueryBuilder
+     */
+    protected function apply($builder)
     {
         return $builder->where($this->columnName(), $this->getValue());
     }
